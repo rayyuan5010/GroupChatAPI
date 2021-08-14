@@ -1,0 +1,14 @@
+eventlet
+flask
+flask-apscheduler
+flask-sqlalchemy
+flask-restful
+flask-swagger-ui
+flask-restful-swagger
+flasgger
+beautifulsoup4
+webdriver-manager
+sqlalchemy
+flask_apispec
+pymysql
+shortuuid
