@@ -12,3 +12,4 @@ sqlalchemy
 flask_apispec
 pymysql
 shortuuid
+randomuser

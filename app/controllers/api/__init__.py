@@ -18,3 +18,5 @@
 from .version import *
 from .user import *
 from .group import *
+from .mixdata import *
+from .friend import *

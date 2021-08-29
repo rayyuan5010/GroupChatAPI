@@ -1,3 +1,4 @@
+from app.controllers.api import friend, user
 from flask_restful import Resource
 from flask import current_app
 from flask_restful_swagger import swagger
@@ -10,25 +11,17 @@ import sys
 import os
 
 
-class AddNewGroup(Resource):
+class AddNewFriend(Resource):
     def post(self):
         try:
-            from ....models import Group, GroupMember
-            name = request.form.get('name')
-            image = request.form.get('image')
-            owner = request.form.get('owner')
-            # if name == None
-            group = Group(
-                name=name,
-                owner=owner,
-                image=image
+            from ....models import FriendList
+            userId = request.form.get('userId')
+            friendId = request.form.get('friendId')
+            fl = FriendList(
+                userId=userId,
+                friendId=friendId
             )
-            groupId = group.save()
-            groupMember = GroupMember(
-                userId=owner,
-                groupId=groupId
-            )
-            groupMember.save()
+            fl.save()
             return APIReturn(status=True,)
         except SQLAlchemyError as se:
             return APIReturn(status=False, errorCode="0x0000000102", message=str(se.__dict__['orig']))

@@ -12,8 +12,9 @@ class User(BaseModel):
     email = db.Column(db.String(100),)
     password = db.Column(db.String(50))
     name = db.Column(db.String(20))
+    userSM = db.Column(db.String(100))
     image = db.Column(db.String(100))
-    firendCode = db.Column(
+    friendCode = db.Column(
         db.String(20), default=shortuuid.ShortUUID().random(length=20))
     deletedAt = db.Column(db.DateTime(timezone=True))
     updatedAt = db.Column(db.DateTime(timezone=True))
@@ -23,6 +24,8 @@ class User(BaseModel):
         "id",
         "email",
         "password",
+        "friendCode",
+        "userSM",
         "name",
         "image",
         "deletedAt",

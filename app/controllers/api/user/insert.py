@@ -14,16 +14,31 @@ class UserSignUp(Resource):
         try:
             from ....models import User
             # uid = request.json.get('id')
-            email = request.form.get('email')
-            password = request.form.get('password')
-            if email == None or password == None:
-                return APIReturn(status=False, message="need email and password", errorCode="0x0000000101")
-            user = User(
-                id=shortuuid.ShortUUID().random(length=20),
-                email=email,
-                password=password
-            )
-            user.save()
+            debug = request.form.get('debug')
+            print(debug)
+            if debug == None or debug == False:
+                email = request.form.get('email')
+                password = request.form.get('password')
+                if email == None or password == None:
+                    return APIReturn(status=False, message="need email and password", errorCode="0x0000000101")
+                user = User(
+                    id=shortuuid.ShortUUID().random(length=20),
+                    email=email,
+                    password=password
+                )
+                user.save()
+            else:
+                from randomuser import RandomUser
+
+                # Generate a single user
+                tempuser = RandomUser()
+                user = User(
+                    id=shortuuid.ShortUUID().random(length=20),
+                    email=tempuser.get_email(),
+                    password=tempuser.get_password(),
+                    name=tempuser.get_full_name()
+                )
+                user.save()
             return APIReturn(status=True, data=user.to_dict())
         except SQLAlchemyError as se:
             return APIReturn(status=False, errorCode="0x0000000102", message=str(se.__dict__['orig']))

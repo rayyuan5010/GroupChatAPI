@@ -5,26 +5,27 @@ db = current_app.config['db']
 BaseModel = current_app.config['BaseModel']
 
 
-class FirendList(BaseModel):
-    __tablename__ = 'tb_firendList'
+class FriendList(BaseModel):
+    __tablename__ = 'tb_friendList'
     userId = db.Column(db.String(28), primary_key=True,)
-    firendId = db.Column(db.String(28), primary_key=True,)
+    friendId = db.Column(db.String(28), primary_key=True,)
+    accept = db.Column(db.Integer)
     deletedAt = db.Column(db.DateTime(timezone=True))
     updatedAt = db.Column(db.DateTime(timezone=True))
     createdAt = db.Column(db.DateTime(timezone=True),
                           default=datetime.datetime.now())
     _default_fields = [
         "userId",
-        "firendId",
+        "friendId",
         "deletedAt",
         "updatedAt",
         "createdAt",
     ]
 
     def __init__(self, userId,
-                 firendId):
+                 friendId):
         self.userId = userId
-        self.firendId = firendId
+        self.friendId = friendId
 
     def delete(self):
         self.deletedAt = datetime.datetime.now()
