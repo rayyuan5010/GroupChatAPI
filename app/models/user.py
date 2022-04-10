@@ -33,12 +33,13 @@ class User(BaseModel):
         "createdAt",
     ]
 
-    def __init__(self, id, email, password, name="新用戶", image=""):
+    def __init__(self, id, email, password, name="新用戶", image="", userSM=""):
         self.id = id
         self.email = email
         self.password = password
         self.name = name
         self.image = image
+        self.userSM = userSM
 
     def delete(self):
         self.deletedAt = datetime.datetime.now()
