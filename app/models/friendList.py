@@ -9,7 +9,7 @@ class FriendList(BaseModel):
     __tablename__ = 'tb_friendList'
     userId = db.Column(db.String(28), primary_key=True,)
     friendId = db.Column(db.String(28), primary_key=True,)
-    accept = db.Column(db.Integer, default=0)
+    accept = db.Column(db.Integer)
     deletedAt = db.Column(db.DateTime(timezone=True))
     updatedAt = db.Column(db.DateTime(timezone=True))
     createdAt = db.Column(db.DateTime(timezone=True),
@@ -17,17 +17,15 @@ class FriendList(BaseModel):
     _default_fields = [
         "userId",
         "friendId",
-        "accept",
         "deletedAt",
         "updatedAt",
         "createdAt",
     ]
 
     def __init__(self, userId,
-                 friendId, accept=0):
+                 friendId):
         self.userId = userId
         self.friendId = friendId
-        self.accept = accept
 
     def delete(self):
         self.deletedAt = datetime.datetime.now()

@@ -18,5 +18,5 @@
 
 
 class SQLConfig:
-    SQLALCHEMY_DATABASE_URI = url = 'mysql+pymysql://root:ray9707@localhost:3306/GroupChat'
+    SQLALCHEMY_DATABASE_URI = url = 'mysql+pymysql://rayyuan:ray9707@localhost:3306/GroupChat'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

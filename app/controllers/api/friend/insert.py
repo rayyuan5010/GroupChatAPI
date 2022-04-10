@@ -14,12 +14,14 @@ import os
 class AddNewFriend(Resource):
     def post(self):
         try:
-            from ....models import FriendList
+            from ....models import FriendList,User
             userId = request.form.get('userId')
             friendId = request.form.get('friendId')
+            friendUser:User =  User.query.filter_by(
+                friendCode=friendId).one()
             fl = FriendList(
                 userId=userId,
-                friendId=friendId
+                friendId=friendUser.id
             )
             fl.save()
             return APIReturn(status=True,)

@@ -16,6 +16,7 @@ class User(BaseModel):
     image = db.Column(db.String(100))
     friendCode = db.Column(
         db.String(20), default=shortuuid.ShortUUID().random(length=20))
+    fcmToken = db.Column(db.String(200))
     deletedAt = db.Column(db.DateTime(timezone=True))
     updatedAt = db.Column(db.DateTime(timezone=True))
     createdAt = db.Column(db.DateTime(timezone=True),
@@ -28,18 +29,19 @@ class User(BaseModel):
         "userSM",
         "name",
         "image",
+        "fcmToken",
         "deletedAt",
         "updatedAt",
         "createdAt",
     ]
 
-    def __init__(self, id, email, password, name="新用戶", image="", userSM=""):
+    def __init__(self, id, email, password, name="新用戶", image="", friendCode=""):
         self.id = id
         self.email = email
         self.password = password
         self.name = name
         self.image = image
-        self.userSM = userSM
+        self.friendCode = friendCode
 
     def delete(self):
         self.deletedAt = datetime.datetime.now()

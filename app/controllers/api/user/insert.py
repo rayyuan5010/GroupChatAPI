@@ -24,7 +24,8 @@ class UserSignUp(Resource):
                 user = User(
                     id=shortuuid.ShortUUID().random(length=20),
                     email=email,
-                    password=password
+                    password=password,
+                    friendCode=shortuuid.ShortUUID().random(length=20)
                 )
                 user.save()
             else:
@@ -36,9 +37,33 @@ class UserSignUp(Resource):
                     id=shortuuid.ShortUUID().random(length=20),
                     email=tempuser.get_email(),
                     password=tempuser.get_password(),
-                    name=tempuser.get_full_name()
+                    name=tempuser.get_full_name(),
+                    friendCode=shortuuid.ShortUUID().random(length=20)
                 )
                 user.save()
+            return APIReturn(status=True, data=user.to_dict())
+        except SQLAlchemyError as se:
+            return APIReturn(status=False, errorCode="0x0000000102", message=str(se.__dict__['orig']))
+        except Exception as e:
+            print(e)
+            return APIReturn(status=False, errorCode="0x0000000103", message=str(e))
+
+
+class UpdateFcmToken(Resource):
+    def post(self):
+        try:
+            from ....models import User
+            # uid = request.json.get('id')
+            uid = request.form.get('id')
+
+            token = request.form.get('token')
+            if uid == None or token == None:
+                return APIReturn(status=False, message="need uid or token", errorCode="0x0000000101")
+            user: User = User.query.filter_by(
+                id=uid).one()
+            user.fcmToken = token
+            user.update()
+
             return APIReturn(status=True, data=user.to_dict())
         except SQLAlchemyError as se:
             return APIReturn(status=False, errorCode="0x0000000102", message=str(se.__dict__['orig']))

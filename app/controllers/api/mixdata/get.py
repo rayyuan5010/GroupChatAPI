@@ -25,7 +25,7 @@ class GetGroupAndFriendList(Resource):
                 lGroupList.append(o.to_dict())
             lFriendList = []
             friends = db.session.query(FriendList, User).join(
-                User, FriendList.friendId == User.id).filter(FriendList.userId == userId).filter(FriendList.accept == 1).all()
+                User, FriendList.friendId == User.id).filter(FriendList.userId == userId).all()
             for f, u in friends:
                 u: User
                 lFriendList.append(dict(
