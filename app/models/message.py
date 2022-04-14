@@ -8,18 +8,18 @@ BaseModel = current_app.config['BaseModel']
 class Message(BaseModel):
     __tablename__ = 'tb_message'
     id = db.Column(db.String(50), primary_key=True,)
-    receiverId      = db.Column(db.String(100),)
-    reciveType      = db.Column(db.Integer)
-    senderId        = db.Column(db.String(50))
-    messageTime     = db.Column(db.DateTime(timezone=True),
-                          default=datetime.datetime.now())
-    messageType     = db.Column(db.Integer)
-    messageContent  = db.Column(db.String(50))
-    messageTabId    = db.Column(db.String(50))
+    receiverId = db.Column(db.String(100),)
+    reciveType = db.Column(db.Integer)
+    senderId = db.Column(db.String(50))
+    messageTime = db.Column(db.DateTime(timezone=True),
+                            default=datetime.datetime.now())
+    messageType = db.Column(db.Integer)
+    messageContent = db.Column(db.String(50))
+    messageTabId = db.Column(db.String(50))
 
-    deletedAt       = db.Column(db.DateTime(timezone=True))
-    updatedAt       = db.Column(db.DateTime(timezone=True))
-    createdAt       = db.Column(db.DateTime(timezone=True),
+    deletedAt = db.Column(db.DateTime(timezone=True))
+    updatedAt = db.Column(db.DateTime(timezone=True))
+    createdAt = db.Column(db.DateTime(timezone=True),
                           default=datetime.datetime.now())
     _default_fields = [
         "receiverId",
@@ -35,13 +35,13 @@ class Message(BaseModel):
     ]
 
     def __init__(self,
-        id,
-        receiverId,
-        senderId,
-        reciveType = 0,
-        messageType = 0,
-        messageContent = "",
-        messageTabId = "0"):
+                 id,
+                 receiverId,
+                 senderId,
+                 reciveType=0,
+                 messageType=0,
+                 messageContent="",
+                 messageTabId="0"):
         self.id = id
         self.receiverId = receiverId
         self.reciveType = reciveType

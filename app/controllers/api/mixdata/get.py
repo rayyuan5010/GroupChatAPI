@@ -7,6 +7,7 @@ from sqlalchemy import or_
 from ....tools import *
 from app.tools import APIReturn
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import or_
 
 
 class GetGroupAndFriendList(Resource):

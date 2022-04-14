@@ -35,12 +35,13 @@ class User(BaseModel):
         "createdAt",
     ]
 
-    def __init__(self, id, email, password, name="新用戶", image="", friendCode=""):
+    def __init__(self, id, email, password, name="新用戶", image="", friendCode="", userSM=""):
         self.id = id
         self.email = email
         self.password = password
         self.name = name
         self.image = image
+        self.userSM = userSM
         self.friendCode = friendCode
 
     def delete(self):

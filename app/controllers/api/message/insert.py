@@ -20,10 +20,12 @@ class SendMessage2Friend(Resource):
             receiverId = request.form.get('receiverId')
             message = request.form.get('message')
             debug = request.form.get('debug')
+            print(debug)
             if debug == None or debug == False:
                 senderId = request.form.get('senderId')
                 if senderId == None or senderId == None:
                     return APIReturn(status=False, message="need sender or receiver", errorCode="0x0000000101")
+                userData = User.query.filter(User.id == senderId).one()
                 message = Message(
                     id=f"{senderId}-{datetime.datetime.now()}",
                     messageContent=message,
@@ -43,7 +45,7 @@ class SendMessage2Friend(Resource):
                 message.save()
             userData2 = User.query.filter_by(
                 id=receiverId).one()
-
+            print("receiverId", receiverId)
             headers = {
                 'Content-Type': 'application/json',
                 'Authorization': 'key=AAAAxF-fPxs:APA91bEONS_MTChz6nFZuEwcvzir_kpTM4RHnTCL1S-O9aL3hXClZ1kBLbzxQpVHq_upAgUHqCYeRoqhmsU40EyQ5qhN-KH-M20ZpguDPAdJXCeZLaz28Y-2VQTWfe3yCPSHps91L2YmOTUpfHjYmaFGP6FQXsKsbA',

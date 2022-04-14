@@ -54,9 +54,10 @@ class UpdateFcmToken(Resource):
         try:
             from ....models import User
             # uid = request.json.get('id')
-            uid = request.form.get('id')
+            uid = request.form.get('AuthID')
 
             token = request.form.get('token')
+            print(uid)
             if uid == None or token == None:
                 return APIReturn(status=False, message="need uid or token", errorCode="0x0000000101")
             user: User = User.query.filter_by(
@@ -66,7 +67,7 @@ class UpdateFcmToken(Resource):
 
             return APIReturn(status=True, data=user.to_dict())
         except SQLAlchemyError as se:
-            return APIReturn(status=False, errorCode="0x0000000102", message=str(se.__dict__['orig']))
+            return APIReturn(status=False, errorCode="0x0000000102", message=str(se))
         except Exception as e:
             print(e)
             return APIReturn(status=False, errorCode="0x0000000103", message=str(e))

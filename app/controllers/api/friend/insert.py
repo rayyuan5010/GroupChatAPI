@@ -14,16 +14,22 @@ import os
 class AddNewFriend(Resource):
     def post(self):
         try:
-            from ....models import FriendList,User
+            from ....models import FriendList, User
             userId = request.form.get('userId')
             friendId = request.form.get('friendId')
-            friendUser:User =  User.query.filter_by(
+            friendUser: User = User.query.filter_by(
                 friendCode=friendId).one()
+            newFriendId = friendUser.id
             fl = FriendList(
                 userId=userId,
-                friendId=friendUser.id
+                friendId=newFriendId
             )
             fl.save()
+            f2 = FriendList(
+                userId=newFriendId,
+                friendId=userId
+            )
+            f2.save()
             return APIReturn(status=True,)
         except SQLAlchemyError as se:
             return APIReturn(status=False, errorCode="0x0000000102", message=str(se.__dict__['orig']))
