@@ -16,7 +16,7 @@ api = swagger.docs(
 )
 api.add_resource(Version, '/version')
 
-
+api.add_resource(SelfInfo, '/user/self/get')
 api.add_resource(UserSignUp, '/user/insert')
 api.add_resource(UserLogin, '/user/get')
 api.add_resource(UpdateFcmToken, '/user/token/update')
@@ -24,4 +24,9 @@ api.add_resource(AddNewGroup, '/group/insert')
 api.add_resource(GetUserGroup, '/group/get')
 api.add_resource(GetGroupAndFriendList, '/mixData/get')
 api.add_resource(AddNewFriend, '/friend/insert')
+api.add_resource(GetFriendInfo, '/friend/get')
 api.add_resource(SendMessage2Friend, '/message/insert')
+
+
+api.add_resource(UploadHeadshot, '/file/image/headshot/upload')
+api.add_resource(GetHeadshot, '/file/image/headshot/')

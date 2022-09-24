@@ -15,7 +15,7 @@ class User(BaseModel):
     userSM = db.Column(db.String(100))
     image = db.Column(db.String(100))
     friendCode = db.Column(
-        db.String(20), default=shortuuid.ShortUUID().random(length=20))
+        db.String(20),  primary_key=True, default=shortuuid.ShortUUID().random(length=10))
     fcmToken = db.Column(db.String(200))
     deletedAt = db.Column(db.DateTime(timezone=True))
     updatedAt = db.Column(db.DateTime(timezone=True))

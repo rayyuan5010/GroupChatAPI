@@ -8,7 +8,7 @@ BaseModel = current_app.config['BaseModel']
 class Group(BaseModel):
     __tablename__ = 'tb_group'
     id = db.Column(db.String(28), primary_key=True,
-                   default=shortuuid.ShortUUID().random(length=28))
+                   )
     name = db.Column(db.String(20))
     owner = db.Column(db.String(28))
     image = db.Column(db.String(255))
@@ -40,6 +40,7 @@ class Group(BaseModel):
         db.session.commit()
 
     def save(self):
+        self.id = shortuuid.ShortUUID().random(length=28)
         db.session.add(self)
         db.session.commit()
         db.session.flush()

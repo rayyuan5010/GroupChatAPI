@@ -18,41 +18,46 @@ class SendMessage2Friend(Resource):
             from ....models import User, Message
 
             receiverId = request.form.get('receiverId')
-            message = request.form.get('message')
+            tmessage = request.form.get('message')
             debug = request.form.get('debug')
-            print(debug)
-            if debug == None or debug == False:
-                senderId = request.form.get('senderId')
-                if senderId == None or senderId == None:
-                    return APIReturn(status=False, message="need sender or receiver", errorCode="0x0000000101")
-                userData = User.query.filter(User.id == senderId).one()
-                message = Message(
-                    id=f"{senderId}-{datetime.datetime.now()}",
-                    messageContent=message,
-                    receiverId=receiverId,
-                    senderId=senderId
-                )
-                message.save()
-            else:
-                userDatas: List = User.query.all()
-                userData: User = userDatas[0]
-                message = Message(
-                    id=f"{userData.id}-{datetime.datetime.now()}",
-                    messageContent=message,
-                    receiverId=receiverId,
-                    senderId=userData.id
-                )
-                message.save()
+            # print(message)
+
+            old_message = json.loads(tmessage)
+            senderId = request.form.get('senderId')
+            if senderId == None or senderId == None:
+                return APIReturn(status=False, message="need sender or receiver", errorCode="0x0000000101")
+            userData = User.query.filter(User.id == senderId).one()
+            '''
+            "senderId": Authentication.user.id,
+            "senderName": "name",
+            "senderImage": "image",
+            "reciver": "",
+            "reciveType": "0",
+            "messageId": "${Authentication.user.id}-${time}",
+            "messageType": "0",
+            "messageTime": "$time",
+            "messageContent": message,
+            "messageTabId": "0"
+            '''
+            message = Message(
+                messageId=old_message['messageId'],
+                messageContent=old_message['messageContent'],
+                receiverId=old_message['reciver'],
+                senderId=old_message['senderId'],
+
+            )
+            message.save()
+
             userData2 = User.query.filter_by(
                 id=receiverId).one()
-            print("receiverId", receiverId)
+            # print("receiverId", receiverId)
             headers = {
                 'Content-Type': 'application/json',
-                'Authorization': 'key=AAAAxF-fPxs:APA91bEONS_MTChz6nFZuEwcvzir_kpTM4RHnTCL1S-O9aL3hXClZ1kBLbzxQpVHq_upAgUHqCYeRoqhmsU40EyQ5qhN-KH-M20ZpguDPAdJXCeZLaz28Y-2VQTWfe3yCPSHps91L2YmOTUpfHjYmaFGP6FQXsKsbA',
+                'Authorization': 'key=AAAA8txAe6s:APA91bH9NwAC6OCWGlsCWylqKPwkOY4_S-fn6vMBIoUYZuhptk70BqnpGWAyS9EJ1mzqG5dzQteFUqgfDjbbaxYzEIZjR-17gLHBXVnWUrs4qPD7aqyaWJ4RX6lJx2TbPkU6f30s3zME',
                 'Content-Type': 'application/json'
             }
             url = 'https://fcm.googleapis.com/fcm/send'
-            print(message)
+            # print(message)
             payload = {
                 "registration_ids": [userData2.fcmToken],
                 "notification": {
@@ -60,7 +65,7 @@ class SendMessage2Friend(Resource):
                     "body": message.messageContent
                 },
                 "collapse_key": "type_a",
-                "data": message.to_dict()
+                "data": old_message
             }
             print(json.dumps(payload))
             resp = requests.post(url, headers=headers,
@@ -70,7 +75,8 @@ class SendMessage2Friend(Resource):
 
             return APIReturn(status=True, data=message.to_dict())
         except SQLAlchemyError as se:
-            return APIReturn(status=False, errorCode="0x0000000102", message=str(se.__dict__['orig']))
+            print(se)
+            return APIReturn(status=False, errorCode="0x0000000102", message=str(se))
         except Exception as e:
             print(e)
             return APIReturn(status=False, errorCode="0x0000000103", message=str(e))

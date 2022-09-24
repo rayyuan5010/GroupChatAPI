@@ -27,6 +27,7 @@ import sys
 from threading import Thread
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import types
 from sqlalchemy.orm.attributes import QueryableAttribute
 from apscheduler.schedulers.background import BackgroundScheduler
 from .config import SQLConfig
@@ -79,9 +80,10 @@ class BaseModel(db.Model):
             if check in _hide or key in hidden:
                 continue
             if check in show or key in default:
+
                 if type(getattr(self, key)) is datetime.datetime:
-                    ret_data[key] = getattr(
-                        self, key).strftime('%Y-%m-%d %H:%M:%S')
+                    ret_data[key] = int(getattr(
+                        self, key).timestamp())
                 elif type(getattr(self, key)) is bytes:
                     ret_data[key] = getattr(self, key).decode()
                 else:
@@ -164,6 +166,7 @@ def create_app():
         app.config['app'] = app
         app.config['db'] = db
         app.config['BaseModel'] = BaseModel
+        app.config["UPLOAD_FOLDER"] = "static"
         from . import models
         from .controllers import API
         db.init_app(app)

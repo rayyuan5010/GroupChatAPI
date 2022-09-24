@@ -7,7 +7,7 @@ BaseModel = current_app.config['BaseModel']
 
 class Message(BaseModel):
     __tablename__ = 'tb_message'
-    id = db.Column(db.String(50), primary_key=True,)
+    messageId = db.Column(db.String(50), primary_key=True,)
     receiverId = db.Column(db.String(100),)
     reciveType = db.Column(db.Integer)
     senderId = db.Column(db.String(50))
@@ -22,6 +22,7 @@ class Message(BaseModel):
     createdAt = db.Column(db.DateTime(timezone=True),
                           default=datetime.datetime.now())
     _default_fields = [
+        "messageId",
         "receiverId",
         "reciveType",
         "senderId",
@@ -35,14 +36,14 @@ class Message(BaseModel):
     ]
 
     def __init__(self,
-                 id,
+                 messageId,
                  receiverId,
                  senderId,
                  reciveType=0,
                  messageType=0,
                  messageContent="",
                  messageTabId="0"):
-        self.id = id
+        self.messageId = messageId
         self.receiverId = receiverId
         self.reciveType = reciveType
         self.senderId = senderId

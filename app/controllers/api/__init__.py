@@ -21,3 +21,4 @@ from .group import *
 from .mixdata import *
 from .friend import *
 from .message import *
+from .upload import *
