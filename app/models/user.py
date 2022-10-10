@@ -15,7 +15,7 @@ class User(BaseModel):
     userSM = db.Column(db.String(100))
     image = db.Column(db.String(100))
     friendCode = db.Column(
-        db.String(20),  primary_key=True, default=shortuuid.ShortUUID().random(length=10))
+        db.String(20),  primary_key=True, default=shortuuid.ShortUUID().random(length=5))
     fcmToken = db.Column(db.String(200))
     deletedAt = db.Column(db.DateTime(timezone=True))
     updatedAt = db.Column(db.DateTime(timezone=True))
@@ -53,5 +53,6 @@ class User(BaseModel):
         db.session.commit()
 
     def save(self):
+        self.id = shortuuid.ShortUUID().random(length=20)
         db.session.add(self)
         db.session.commit()

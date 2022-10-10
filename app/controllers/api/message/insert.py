@@ -53,7 +53,7 @@ class SendMessage2Friend(Resource):
             # print("receiverId", receiverId)
             headers = {
                 'Content-Type': 'application/json',
-                'Authorization': 'key=AAAA8txAe6s:APA91bH9NwAC6OCWGlsCWylqKPwkOY4_S-fn6vMBIoUYZuhptk70BqnpGWAyS9EJ1mzqG5dzQteFUqgfDjbbaxYzEIZjR-17gLHBXVnWUrs4qPD7aqyaWJ4RX6lJx2TbPkU6f30s3zME',
+                'Authorization': 'key=AAAA8txAe6s:APA91bHQ-fl5YnqVHPo6Kq-4rw3A03ThVvszj63dKN5YFdL84cj3IDHBUH5cug9nOMQ39KBocYRJxyWrAACiIONagwG6l6Z3JhGs8uGui2adpP1lXBiF0or_Mdbc3q-0qQXGEObghHLU',
                 'Content-Type': 'application/json'
             }
             url = 'https://fcm.googleapis.com/fcm/send'

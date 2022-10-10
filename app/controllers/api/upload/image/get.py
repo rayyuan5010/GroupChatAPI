@@ -29,3 +29,20 @@ class GetHeadshot(Resource):
         except Exception as e:
             print(e)
             return APIReturn(status=False, errorCode="0x0000000103", message=str(e))
+
+
+class GetSticker(Resource):
+    def get(self):
+        try:
+            from .....models import User
+            # uid = request.json.get('id')
+            # userId = request.form.get('id')
+            args = request.args
+            image_id = args['i']
+
+            return send_file(f'{current_app.config["UPLOAD_FOLDER"]}/Sticker/{image_id}.gif')
+        except SQLAlchemyError as se:
+            return APIReturn(status=False, errorCode="0x0000000102", message=str(se.__dict__['orig']))
+        except Exception as e:
+            print(e)
+            return APIReturn(status=False, errorCode="0x0000000103", message=str(e))
